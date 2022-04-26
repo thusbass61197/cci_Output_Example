@@ -8,6 +8,7 @@
 #define MASK_HEIGHT                         480
 #define WorkingSet_0                          0
 #define DataMask_Main                      1000
+#define DataMask_1001                      1001
 #define SoftKeyMask_Main                   4000
 #define SoftKey_5000                       5000
 #define SoftKey_Q1                         5001
@@ -17,6 +18,9 @@
 #define SoftKey_5005                       5005
 #define SoftKey_5006                       5006
 #define SoftKey_5007                       5007
+#define OutputString_11000                11000
+#define OutputString_11001                11001
+#define Ellipse_Lampe                     15000
 #define _80_20000                         20000
 #define _64_20003                         20003
 #define _40_20004                         20004
@@ -34,9 +38,14 @@
 #define _64_20911                         20911
 #define _40_20912                         20912
 #define _32_20913                         20913
+#define FontAttributes_23000              23000
+#define LineAttributes_24000              24000
+#define FillAttributes_25000              25000
 #define ObjectPointer_27000               27000
 #define ObjectPointer_NULL                27001
 #define ObjectPointer_27002               27002
+#define ObjectPointer_TasteEX             27003
+#define ObjectPointer_ausgefahren         27004
 #define AuxFunction2_Q1                   29001
 #define AuxFunction2_Q2                   29002
 #define AuxFunction2_Q3                   29003
