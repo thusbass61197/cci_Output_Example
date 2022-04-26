@@ -267,6 +267,8 @@ void AppVTClientDoProcess(const ISOVT_EVENT_DATA_T* psEvData)
 	I3 = !gpio_get_level(BUTTON_I2);
 
 	IsoVtcCmd_NumericValue(psEvData->u8Instance, ObjectPointer_ausgefahren, I3 ? Ellipse_Lampe : ID_NULL  );
+	IsoVtcCmd_NumericValue(psEvData->u8Instance, ObjectPointer_TasteEX, I2 ? Ellipse_Lampe : ID_NULL  );
+
 
 
 	TON3(I3);
