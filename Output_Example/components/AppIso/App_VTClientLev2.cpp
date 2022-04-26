@@ -248,34 +248,26 @@ void init_GPIO(void)
 
 
 
-static int I1 = 0;
 static int I2 = 0;
-CYCLE_4_TAP CYCLE_4A;
+static int I3 = 0;
+RS B002;
+TON B003;
+R_TRIG B004;
 
 /* ************************************************************************ */
 void AppVTClientDoProcess(const ISOVT_EVENT_DATA_T* psEvData)
 {  /* Cyclic VTClient function */
 
 
+	B003.PT = 200;
+	I2 = !gpio_get_level(BUTTON_I1);
+	I3 = !gpio_get_level(BUTTON_I2);
+	B003(I3);
+	B004(B003.Q);
+	B002(I2,B004.Q);
 
-	// to achieve this:
-
-	//IsoVtcCmd_CtrlAudioSignal(u8Instance, 0, 700, 500, 0);
-	//vTaskDelay(pdMS_TO_TICKS(500));
-	//IsoVtcCmd_CtrlAudioSignal(u8Instance, 0, 940, 1000, 0);
-
-
-	I1 = !gpio_get_level(BUTTON_I1);
-	I2 = !gpio_get_level(BUTTON_I2);
-
-	CYCLE_4A(I1);
-	if (CYCLE_4A.Q0) IsoVtcCmd_CtrlAudioSignal(psEvData->u8Instance, 1, 700,  500, 0);
-	if (CYCLE_4A.Q1) IsoVtcCmd_CtrlAudioSignal(psEvData->u8Instance, 1, 940, 1000, 0);
-	if (CYCLE_4A.Q2) IsoVtcCmd_CtrlAudioSignal(psEvData->u8Instance, 1, 1030, 500, 0);
-
-
-
-
+	gpio_set_level(GPIO_Q1, B002.Q1);
+	gpio_set_level(GPIO_Q2, B002.Q1);
 }
 
 
@@ -286,18 +278,18 @@ void VTC_handleSoftkeysAndButton_Q1(const struct ButtonActivation_S *pButtonData
 
 	case BUTTON_STATE_PRESSED:
 	case BUTTON_STATE_HELD:
-		gpio_set_level(GPIO_Q1, 1);
+
 		break;
 
 
 	case BUTTON_STATE_RELEASED:
 	case BUTTON_STATE_ABORTED:
-		gpio_set_level(GPIO_Q1, 0);
 		break;
 
 
 	}
 }
+
 
 void VTC_handleSoftkeysAndButton_Q2(const struct ButtonActivation_S *pButtonData) {
 
@@ -306,13 +298,13 @@ void VTC_handleSoftkeysAndButton_Q2(const struct ButtonActivation_S *pButtonData
 
 	case BUTTON_STATE_PRESSED:
 	case BUTTON_STATE_HELD:
-		gpio_set_level(GPIO_Q2, 1);
+
 		break;
 
 
 	case BUTTON_STATE_RELEASED:
 	case BUTTON_STATE_ABORTED:
-		gpio_set_level(GPIO_Q2, 0);
+
 		break;
 
 
