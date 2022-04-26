@@ -247,27 +247,27 @@ void init_GPIO(void)
 }
 
 
-
+static int I1 = 0;
 static int I2 = 0;
 static int I3 = 0;
-RS B002;
-TON B003;
-R_TRIG B004;
+RS RS2;
+TON TON3;
+R_TRIG R_TRIG4;
 
 /* ************************************************************************ */
 void AppVTClientDoProcess(const ISOVT_EVENT_DATA_T* psEvData)
 {  /* Cyclic VTClient function */
 
 
-	B003.PT = 200;
+	TON3.PT = 200;
 	I2 = !gpio_get_level(BUTTON_I1);
 	I3 = !gpio_get_level(BUTTON_I2);
-	B003(I3);
-	B004(B003.Q);
-	B002(I2,B004.Q);
+	TON3(I3);
+	R_TRIG4(TON3.Q);
+	RS2(I1 or I2,R_TRIG4.Q);
 
-	gpio_set_level(GPIO_Q1, B002.Q1);
-	gpio_set_level(GPIO_Q2, B002.Q1);
+	gpio_set_level(GPIO_Q1, RS2.Q1);
+	gpio_set_level(GPIO_Q2, RS2.Q1);
 }
 
 
@@ -278,12 +278,13 @@ void VTC_handleSoftkeysAndButton_Q1(const struct ButtonActivation_S *pButtonData
 
 	case BUTTON_STATE_PRESSED:
 	case BUTTON_STATE_HELD:
-
+		I1=1;
 		break;
 
 
 	case BUTTON_STATE_RELEASED:
 	case BUTTON_STATE_ABORTED:
+		I1=0;
 		break;
 
 
